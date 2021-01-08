@@ -27,7 +27,7 @@ namespace Maxian_Robert_ProjectMVC
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDbContext<LibraryStoreContext>(options =>
+            services.AddDbContext<StoreIT>(options =>
  options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddSignalR();
         }

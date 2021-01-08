@@ -7,9 +7,9 @@ using Maxian_Robert_ProjectMVC.Models;
 
 namespace Maxian_Robert_ProjectMVC.Data
 {
-    public class LibraryStoreContext : DbContext
+    public class StoreIT : DbContext
     {
-        public LibraryStoreContext(DbContextOptions<LibraryStoreContext> options) :
+        public StoreIT(DbContextOptions<StoreIT> options) :
        base(options)
         {
             Database.EnsureCreated();
@@ -17,7 +17,9 @@ namespace Maxian_Robert_ProjectMVC.Data
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Laptop> Laptops { get; set; }
-        
+
+        public DbSet<Bill> Bills { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -27,6 +29,6 @@ namespace Maxian_Robert_ProjectMVC.Data
             modelBuilder.Entity<Bill>().ToTable("Bill");
         }
 
-        public DbSet<Bill> Bills { get; set; }
+       
     }
 }

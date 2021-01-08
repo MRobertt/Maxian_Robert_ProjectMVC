@@ -8,7 +8,7 @@ namespace Maxian_Robert_ProjectMVC.Data
 {
     public class DbInitializer
     {
-        public static void Initialize(LibraryStoreContext context)
+        public static void Initialize(StoreIT context)
         {
             context.Database.EnsureCreated();
             if (context.Laptops.Any())

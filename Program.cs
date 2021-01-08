@@ -21,7 +21,7 @@ namespace Maxian_Robert_ProjectMVC
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var context = services.GetRequiredService<LibraryStoreContext>();
+                    var context = services.GetRequiredService<StoreIT>();
                     DbInitializer.Initialize(context);
                 }
                 catch (Exception ex)

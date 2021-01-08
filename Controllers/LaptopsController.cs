@@ -12,9 +12,9 @@ namespace Maxian_Robert_ProjectMVC.Controllers
 {
     public class LaptopsController : Controller
     {
-        private readonly LibraryStoreContext _context;
+        private readonly StoreIT _context;
 
-        public LaptopsController(LibraryStoreContext context)
+        public LaptopsController(StoreIT context)
         {
             _context = context;
         }

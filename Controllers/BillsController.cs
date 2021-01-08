@@ -12,9 +12,9 @@ namespace Maxian_Robert_ProjectMVC.Controllers
 {
     public class BillsController : Controller
     {
-        private readonly LibraryStoreContext _context;
+        private readonly StoreIT _context;
 
-        public BillsController(LibraryStoreContext context)
+        public BillsController(StoreIT context)
         {
             _context = context;
         }
@@ -22,7 +22,8 @@ namespace Maxian_Robert_ProjectMVC.Controllers
         // GET: Bills
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Bills.ToListAsync());
+            var storeIT = _context.Bills.Include(b => b.Customer);
+            return View(await storeIT.ToListAsync());
         }
 
         // GET: Bills/Details/5
@@ -34,6 +35,7 @@ namespace Maxian_Robert_ProjectMVC.Controllers
             }
 
             var bill = await _context.Bills
+                .Include(b => b.Customer)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (bill == null)
             {
@@ -46,6 +48,7 @@ namespace Maxian_Robert_ProjectMVC.Controllers
         // GET: Bills/Create
         public IActionResult Create()
         {
+            ViewData["CustomerID"] = new SelectList(_context.Customers, "CustomerID", "CustomerID");
             return View();
         }
 
@@ -54,7 +57,7 @@ namespace Maxian_Robert_ProjectMVC.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Total,NumarFactura")] Bill bill)
+        public async Task<IActionResult> Create([Bind("ID,CustomerID,Total,NumarFactura")] Bill bill)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +65,7 @@ namespace Maxian_Robert_ProjectMVC.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CustomerID"] = new SelectList(_context.Customers, "CustomerID", "CustomerID", bill.CustomerID);
             return View(bill);
         }
 
@@ -78,6 +82,7 @@ namespace Maxian_Robert_ProjectMVC.Controllers
             {
                 return NotFound();
             }
+            ViewData["CustomerID"] = new SelectList(_context.Customers, "CustomerID", "CustomerID", bill.CustomerID);
             return View(bill);
         }
 
@@ -86,7 +91,7 @@ namespace Maxian_Robert_ProjectMVC.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Total,NumarFactura")] Bill bill)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,CustomerID,Total,NumarFactura")] Bill bill)
         {
             if (id != bill.ID)
             {
@@ -113,6 +118,7 @@ namespace Maxian_Robert_ProjectMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CustomerID"] = new SelectList(_context.Customers, "CustomerID", "CustomerID", bill.CustomerID);
             return View(bill);
         }
 
@@ -125,6 +131,7 @@ namespace Maxian_Robert_ProjectMVC.Controllers
             }
 
             var bill = await _context.Bills
+                .Include(b => b.Customer)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (bill == null)
             {
